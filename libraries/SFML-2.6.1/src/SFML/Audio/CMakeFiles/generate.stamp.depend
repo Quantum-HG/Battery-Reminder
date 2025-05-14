@@ -1,0 +1,7 @@
+# CMake generation dependency list for this directory.
+C:/Users/HG/Desktop/HG/Softwares/CMake/share/cmake-3.29/Modules/FindOpenAL.cmake
+C:/Users/HG/Desktop/HG/Softwares/CMake/share/cmake-3.29/Modules/FindPackageHandleStandardArgs.cmake
+C:/Users/HG/Desktop/HG/Softwares/CMake/share/cmake-3.29/Modules/FindPackageMessage.cmake
+C:/Users/HG/Desktop/SFML-2.6.1/cmake/Modules/FindFLAC.cmake
+C:/Users/HG/Desktop/SFML-2.6.1/cmake/Modules/FindVORBIS.cmake
+C:/Users/HG/Desktop/SFML-2.6.1/src/SFML/Audio/CMakeLists.txt
