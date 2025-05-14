@@ -45,6 +45,9 @@
     <ClCompile Include="src\sections.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\app.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libraries\imgui-sfml\imgui-SFML.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\sections.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\app.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

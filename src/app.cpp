@@ -1,0 +1,221 @@
+#include "app.h"
+
+
+App::App() {
+    // Empty constructor
+    io = nullptr;
+    style = nullptr;
+}
+
+App::~App() {
+    // Empty destructor
+}
+
+void App::run() {
+    init();
+    while (window.isOpen()) {
+        handleInputs();
+        startframe();
+        mainloop();
+        update();
+        endframe();
+    }
+    shutDown();
+}
+
+void App::init() {
+    // TODO: call initWindow, initImGui, etc.
+
+    loaded_json_data = core::load_data();
+
+    initWindow();
+    initImGui();
+    initImGuiIO();
+    initImGuiStyles();
+}
+
+void App::initWindow() {
+    // TODO: create SFML window and set icon
+
+    window.create(sf::VideoMode(900, 544), "Battery Reminder");
+    window.setFramerateLimit(60);
+
+    // set window icon
+    sf::Image icon;
+    if (!icon.loadFromFile("assets/flash.png")) {
+        std::cerr << "Failed to load icon.\n";
+    }
+    else {
+        window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+    }
+}
+
+void App::initImGui() {
+    // TODO: init ImGui-SFML
+    ImGui::SFML::Init(window);
+}
+
+void App::initImGuiIO() {
+    // TODO: load fonts, set ImGui IO settings
+
+    io = &ImGui::GetIO();
+    io->Fonts->Clear();
+    io->Fonts->AddFontFromFileTTF("Orbitron-Black.ttf", 16.0f);
+    ImGui::SFML::UpdateFontTexture();
+
+    
+}
+
+void App::initImGuiStyles() {
+    // TODO: set ImGui styles
+
+    // Changing the style
+    ImGui::StyleColorsClassic();
+
+    style = &ImGui::GetStyle();
+    style->GrabRounding = 12.f;
+}
+
+void App::handleInputs() {
+    // TODO: handle SFML and ImGui events
+
+    // handling sfml inputs
+    sf::Event event;
+    while (window.pollEvent(event))
+    {
+        ImGui::SFML::ProcessEvent(event);
+
+        if (event.type == sf::Event::Closed)
+            window.close();
+    }
+}
+
+void App::startframe() {
+    // TODO: begin ImGui frame
+
+    // Start new ImGui frame
+    ImGui::SFML::Update(window, sf::seconds(1.f / 60.f));
+}
+
+void App::mainloop() {
+    // TODO: ImGui UI + battery logic
+
+    // MAIN LOOP LOGIC
+    //=========================================================================================================================================================================================================================================================
+
+
+    CurrentBatteryStatus = core::get_BatteryStatus();
+
+
+    std::string today = core::getDate();
+    if (not was_charging)
+    {
+        if (CurrentBatteryStatus.is_charging)
+        {
+            // loaded_json_data["CHARGE_CYCLES"][core::getDate()] += 1;
+        }
+    }
+    was_charging = CurrentBatteryStatus.is_charging;
+
+    // std::cout << "w- " << window.getSize().x << ", h- " << window.getSize().y << std::endl;
+
+    // ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.0f, 0.0f, 0.0f, 1.0f)); // Change frame background color
+    ImGui::Begin("Hello, ImGui!", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar);
+    // ImGui::Begin("Hello, ImGui!",nullptr, ImGuiWindowFlags_NoMove);
+
+
+
+    if (CurrentBatteryStatus.is_charging)
+    {
+        ImGui::GetForegroundDrawList()->AddRect(ImVec2(0, 0), ImVec2(ImGui::GetWindowSize().x - 10, ImGui::GetWindowSize().y - 20), IM_COL32(0, 230, 0, abs(250.0f * sinf(clock.getElapsedTime().asSeconds()))), 0.0f, 0, 4);
+    }
+    //sf::Texture texture;
+    // texture.loadFromFile("flash.png");
+    //ImGui::Image(texture);
+
+    ImGui::BeginChildFrame(ImGui::GetID("ScrollingRegion"), ImVec2(250, 500));
+
+
+    if (ImGui::Selectable("DashBoard", Selectable_state::DashBoard))
+    {
+        false_all_states();
+        Selectable_state::DashBoard = true;
+
+    }
+    if (ImGui::Selectable("Battery Health", Selectable_state::Battery_Health))
+    {
+        false_all_states();
+        Selectable_state::Battery_Health = true;
+    }
+    if (ImGui::Selectable("Alerts and Notifications", Selectable_state::Alerts_and_Notifications))
+    {
+        false_all_states();
+        Selectable_state::Alerts_and_Notifications = true;
+    }
+    if (ImGui::Selectable("Settings", Selectable_state::Settings))
+    {
+        false_all_states();
+        Selectable_state::Settings = true;
+    }
+
+
+    ImGui::ShowDemoWindow();
+    ImGui::EndChildFrame();
+
+    // Widgets inside the container
+    ImGui::SameLine();
+
+
+
+    if (Selectable_state::DashBoard == true)
+    {
+        show_dashboard(CurrentBatteryStatus, clock);
+    }
+    else if (Selectable_state::Alerts_and_Notifications == true)
+    {
+        show_alerts_and_notification(CurrentBatteryStatus);
+    }
+    else if (Selectable_state::Battery_Health == true)
+    {
+        show_battery_health();
+    }
+    else if (Selectable_state::Settings == true)
+    {
+        show_settings();
+    }
+
+
+    if (ImGui::Button("Save Changes"))
+    {
+        core::save_data(loaded_json_data);
+        core::ShowNotification(L"Success", L"Your changes have been saved");
+    }
+
+
+    ImGui::End();
+    // ImGui::PopStyleColor();
+
+
+    //=========================================================================================================================================================================================================================================================
+
+}
+
+void App::update() {
+    // TODO: update app logic if needed
+}
+
+void App::endframe() {
+    // TODO: render ImGui and display
+
+    // Render ImGui
+    window.clear();
+    ImGui::SFML::Render(window);
+    window.display();
+}
+
+void App::shutDown() {
+    // TODO: cleanup ImGui-SFML
+
+    // Shutdown ImGui and ImGui-SFML
+    ImGui::SFML::Shutdown();
+}
