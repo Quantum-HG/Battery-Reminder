@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Battery_Reminder", "Battery_Reminder.vcxproj", "{5222FF94-3D8E-4178-8D01-60CFCCF16423}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Battery_Reminder_Watcher", "Battery_Reminder_Watcher\Battery_Reminder_Watcher\Battery_Reminder_Watcher.vcxproj", "{8239EAE5-B174-410F-A733-499A4417160B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{5222FF94-3D8E-4178-8D01-60CFCCF16423}.Release|x64.Build.0 = Release|x64
 		{5222FF94-3D8E-4178-8D01-60CFCCF16423}.Release|x86.ActiveCfg = Release|Win32
 		{5222FF94-3D8E-4178-8D01-60CFCCF16423}.Release|x86.Build.0 = Release|Win32
+		{8239EAE5-B174-410F-A733-499A4417160B}.Debug|x64.ActiveCfg = Debug|x64
+		{8239EAE5-B174-410F-A733-499A4417160B}.Debug|x64.Build.0 = Debug|x64
+		{8239EAE5-B174-410F-A733-499A4417160B}.Debug|x86.ActiveCfg = Debug|Win32
+		{8239EAE5-B174-410F-A733-499A4417160B}.Debug|x86.Build.0 = Debug|Win32
+		{8239EAE5-B174-410F-A733-499A4417160B}.Release|x64.ActiveCfg = Release|x64
+		{8239EAE5-B174-410F-A733-499A4417160B}.Release|x64.Build.0 = Release|x64
+		{8239EAE5-B174-410F-A733-499A4417160B}.Release|x86.ActiveCfg = Release|Win32
+		{8239EAE5-B174-410F-A733-499A4417160B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

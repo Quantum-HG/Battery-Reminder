@@ -99,16 +99,12 @@ void App::startframe() {
 }
 
 void App::mainloop() {
-    // TODO: ImGui UI + battery logic
-
     // MAIN LOOP LOGIC
     //=========================================================================================================================================================================================================================================================
 
 
     currentBatteryStatus = core::get_BatteryStatus();
 
-
-    std::string today = core::getDate();
     if (not was_charging)
     {
         if (currentBatteryStatus.is_charging)
@@ -165,7 +161,7 @@ void App::mainloop() {
 
     if (currentSection == AppSections::DashBoard)
     {
-        show_dashboard(currentBatteryStatus, clock);
+        show_dashboard(currentBatteryStatus, clock, loaded_json_data);
     }
     else if (currentSection == AppSections::Alerts_and_Notifications)
     {

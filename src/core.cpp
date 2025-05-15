@@ -26,11 +26,11 @@ nlohmann::json core::load_data()
     // Close the file stream
     file.close();
 
-    core::Config::ALERT_PERCENTAGE = data["ALERT_PERCENTAGE"];
-    core::Config::REMIND_AFTER_EVERY = data["REMIND_AFTER_EVERY"];
-    core::Config::MESSAGE_BOX_ALERT_PREFERENCE = data["MESSAGE_BOX_ALERT_PREFERENCE"];
-    core::Config::TOAST_NOTIFICATION_ALERT_PREFERENCE = data["TOAST_NOTIFICATION_ALERT_PREFERENCE"];
-
+    core::Config::ALERT_PERCENTAGE = data["ALERT_PERCENTAGE"].get<int>();
+    core::Config::REMIND_AFTER_EVERY = data["REMIND_AFTER_EVERY"].get<int>();
+    core::Config::MESSAGE_BOX_ALERT_PREFERENCE = data["MESSAGE_BOX_ALERT_PREFERENCE"].get<bool>();
+    core::Config::TOAST_NOTIFICATION_ALERT_PREFERENCE = data["TOAST_NOTIFICATION_ALERT_PREFERENCE"].get<bool>();
+    core::Config::LAST_CHARGED = data["LAST_CHARGED"].get<std::string>();
     return data;
 }
 
@@ -42,7 +42,7 @@ void core::save_data(nlohmann::json loaded_json_data)
         {"REMIND_AFTER_EVERY", core::Config::REMIND_AFTER_EVERY},
         {"MESSAGE_BOX_ALERT_PREFERENCE", core::Config::MESSAGE_BOX_ALERT_PREFERENCE},
         {"TOAST_NOTIFICATION_ALERT_PREFERENCE", core::Config::TOAST_NOTIFICATION_ALERT_PREFERENCE},
-        {"CHARGE_CYCLES", loaded_json_data["CHARGE_CYCLES"]}
+        {"LAST_CHARGED", core::Config::LAST_CHARGED}
     };
 
     // "CHARGE_CYCLES", { {core::getDate(),  0}, }
@@ -60,8 +60,8 @@ void core::save_data(nlohmann::json loaded_json_data)
 // Toast notifications to notify battery percentage
 void core::toast_notification(int battery_percentage, std::wstring caption = L"Unplug your charger")
 {
-    std::wstring appName = L"Full Battery Reminder";
-    std::wstring appUserModelID = L"Full Battery Reminder";
+    std::wstring appName = L"Battery Reminder";
+    std::wstring appUserModelID = L"Battery Reminder";
 
     std::vector<std::wstring> words = { L"Your Device Battery is ", std::to_wstring(battery_percentage), L"% charged" };
 
@@ -110,49 +110,6 @@ void core::toast_notification(int battery_percentage, std::wstring caption = L"U
     //Sleep(expiration ? (DWORD)expiration + 1000 : 15000);
 }
 
-// The BatteryPercentageWidget to show battery percentage
-void core::BatteryPercentageWidget(core::BatteryStatus& CurrentBatteryStatus, sf::Clock& clock) {
-    // Set up sizes
-    ImVec2 canvas_size(100, 200);
-    float battery_width = 80.0f;
-    float battery_height = 160.0f;
-    float battery_thickness = 5.0f;
-    float cap_height = 12.0f; // Height of the small cap at the top
-
-    // Calculate battery fill height
-    float battery_fill_height = battery_height * (CurrentBatteryStatus.battery_percentage / 100.0f);
-
-    // Draw battery outline
-    ImGui::BeginGroup();
-    ImGui::Dummy(ImVec2(0.0f, 5.0f));
-    ImGui::BeginChild("BatteryCanvas", canvas_size);
-    ImDrawList* draw_list = ImGui::GetWindowDrawList();
-
-
-    int val = (int)CurrentBatteryStatus.is_charging ? abs(230.0f * sinf(clock.getElapsedTime().asSeconds())) : 230;
-    // Draw battery body
-    ImVec2 battery_pos = ImGui::GetCursorScreenPos();
-    ImVec2 battery_top_left = battery_pos;
-    ImVec2 battery_bottom_right = ImVec2(battery_pos.x + battery_width, battery_pos.y + battery_height);
-    draw_list->AddRectFilled(battery_top_left, battery_bottom_right, IM_COL32(230, 230, 230, 255), battery_thickness);
-    ImVec2 battery_inner_top_left = ImVec2(battery_top_left.x + battery_thickness, battery_top_left.y + battery_thickness);
-    ImVec2 battery_inner_bottom_right = ImVec2(battery_bottom_right.x - battery_thickness, battery_bottom_right.y - battery_thickness);
-    draw_list->AddRectFilled(battery_inner_top_left, battery_inner_bottom_right, IM_COL32(230, 230, 230, 255));
-
-    // Draw battery cap
-    /*ImVec2 cap_top_left = ImVec2(battery_top_left.x + battery_thickness, battery_top_left.y - cap_height);
-    ImVec2 cap_bottom_right = ImVec2(battery_bottom_right.x - battery_thickness, battery_top_left.y);
-    draw_list->AddRectFilled(cap_top_left, cap_bottom_right, IM_COL32(230, 230, 230, 230));
-    */
-
-    // Draw battery fill
-    ImVec2 battery_fill_top_left = ImVec2(battery_inner_top_left.x, battery_bottom_right.y - battery_fill_height + battery_thickness);
-    ImVec2 battery_fill_bottom_right = battery_inner_bottom_right;
-    draw_list->AddRectFilled(battery_fill_top_left, battery_fill_bottom_right, IM_COL32(0, val, 0, 255));
-
-    ImGui::EndChild();
-    ImGui::EndGroup();
-}
 
 // get the Battery Status
 core::BatteryStatus core::get_BatteryStatus()
@@ -190,22 +147,25 @@ void core::ShowNotification(const std::wstring& title, const std::wstring& messa
 }
 
 // Current current date as std::string
-std::string core::getDate()
+std::string core::getDateTime()
 {
     // Get the current time point
     auto now = std::chrono::system_clock::now();
 
-    // Convert to time_t to get the calendar time
+    // Convert to time_t to get calendar time
     std::time_t now_c = std::chrono::system_clock::to_time_t(now);
 
     // Convert to tm structure for local time
     std::tm localTime;
-    localtime_s(&localTime, &now_c); // Use localtime_r for POSIX systems
+    localtime_s(&localTime, &now_c); // For Windows; use localtime_r on POSIX
 
-    std::string date = std::to_string(localTime.tm_mday) + "-" + std::to_string(localTime.tm_mon) + "-" + std::to_string(localTime.tm_year + 1900);
+    // Format: DD-MM-YYYY HH:MM:SS
+    char buffer[100];
+    std::strftime(buffer, sizeof(buffer), "%d-%m-%Y %H:%M:%S", &localTime);
 
-    return date;
+    return std::string(buffer);
 }
+
 
 
 // Func Definitions of CustomHandler class
@@ -219,4 +179,4 @@ int core::Config::ALERT_PERCENTAGE = 95;
 int core::Config::REMIND_AFTER_EVERY = 10;
 bool core::Config::MESSAGE_BOX_ALERT_PREFERENCE = false;
 bool core::Config::TOAST_NOTIFICATION_ALERT_PREFERENCE = false;
-int core::Config::CHARGE_CYCLE_COUNT_TODAY = 0;
+std::string core::Config::LAST_CHARGED = "";

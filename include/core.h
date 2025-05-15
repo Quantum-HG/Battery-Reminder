@@ -1,13 +1,12 @@
 #pragma once
-#include <imgui.h>
-#include <imgui-SFML.h>
-#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <windows.h>
-#include "core.h"
 #include "wintoastlib.h"
 #include "nlohmann/json.hpp"
 #include <fstream>
+#include <ctime>
+#include <chrono>
+#include <string>
 
 using namespace WinToastLib;
 // using json = nlohmann::json;
@@ -34,7 +33,7 @@ namespace core {
         extern bool MESSAGE_BOX_ALERT_PREFERENCE;
         extern bool TOAST_NOTIFICATION_ALERT_PREFERENCE;
 
-        extern int  CHARGE_CYCLE_COUNT_TODAY;
+        extern std::string LAST_CHARGED;
     }
 
     BatteryStatus get_BatteryStatus();
@@ -50,11 +49,8 @@ namespace core {
     // Creates a toast Battery notification
     void toast_notification(int battery_percentage, std::wstring caption);
 
-    // The BatteryPercentageWidget to show battery percentage
-    void BatteryPercentageWidget(core::BatteryStatus& CurrentBatteryStatus, sf::Clock& clock);
-
     // Current current date as std::string
-    std::string getDate();
+    std::string getDateTime();
 }
 
 class CustomHandler : public IWinToastHandler {
