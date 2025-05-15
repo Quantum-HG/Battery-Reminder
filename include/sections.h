@@ -9,26 +9,17 @@
 #include "nlohmann/json.hpp"
 #include <fstream>
 
-// Whichever section's state is true, is displayed as the current tab
-namespace Selectable_state
+// including the different sections
+#include "dashboard.h"
+#include "settings.h"
+#include "battery_health.h"
+#include "alerts_and_notifications.h"
+
+
+enum class AppSections
 {
-    extern bool DashBoard;
-    extern bool Settings;
-    extern bool Battery_Health;
-    extern bool Alerts_and_Notifications;
-}
-
-// set all the states of Selectable_state to false
-void false_all_states();
-
-// DashBoard section of the app
-void show_dashboard(core::BatteryStatus& CurrentBatteryStatus, sf::Clock& clock);
-
-// Battery Health Section of the app
-void show_battery_health();
-
-// Alerts and notification section of the app
-void show_alerts_and_notification(core::BatteryStatus& battery_status);
-
-// Settings section of the app
-void show_settings();
+    DashBoard,
+    Settings,
+    Battery_Health,
+    Alerts_and_Notifications
+};

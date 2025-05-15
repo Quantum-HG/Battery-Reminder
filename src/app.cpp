@@ -74,6 +74,7 @@ void App::initImGuiStyles() {
 
     style = &ImGui::GetStyle();
     style->GrabRounding = 12.f;
+
 }
 
 void App::handleInputs() {
@@ -104,18 +105,18 @@ void App::mainloop() {
     //=========================================================================================================================================================================================================================================================
 
 
-    CurrentBatteryStatus = core::get_BatteryStatus();
+    currentBatteryStatus = core::get_BatteryStatus();
 
 
     std::string today = core::getDate();
     if (not was_charging)
     {
-        if (CurrentBatteryStatus.is_charging)
+        if (currentBatteryStatus.is_charging)
         {
             // loaded_json_data["CHARGE_CYCLES"][core::getDate()] += 1;
         }
     }
-    was_charging = CurrentBatteryStatus.is_charging;
+    was_charging = currentBatteryStatus.is_charging;
 
     // std::cout << "w- " << window.getSize().x << ", h- " << window.getSize().y << std::endl;
 
@@ -125,7 +126,7 @@ void App::mainloop() {
 
 
 
-    if (CurrentBatteryStatus.is_charging)
+    if (currentBatteryStatus.is_charging)
     {
         ImGui::GetForegroundDrawList()->AddRect(ImVec2(0, 0), ImVec2(ImGui::GetWindowSize().x - 10, ImGui::GetWindowSize().y - 20), IM_COL32(0, 230, 0, abs(250.0f * sinf(clock.getElapsedTime().asSeconds()))), 0.0f, 0, 4);
     }
@@ -136,26 +137,21 @@ void App::mainloop() {
     ImGui::BeginChildFrame(ImGui::GetID("ScrollingRegion"), ImVec2(250, 500));
 
 
-    if (ImGui::Selectable("DashBoard", Selectable_state::DashBoard))
+    if (ImGui::Selectable("DashBoard", currentSection == AppSections::DashBoard))
     {
-        false_all_states();
-        Selectable_state::DashBoard = true;
-
+        currentSection = AppSections::DashBoard;
     }
-    if (ImGui::Selectable("Battery Health", Selectable_state::Battery_Health))
+    else if (ImGui::Selectable("Battery Health", currentSection == AppSections::Battery_Health))
     {
-        false_all_states();
-        Selectable_state::Battery_Health = true;
+        currentSection = AppSections::Battery_Health;
     }
-    if (ImGui::Selectable("Alerts and Notifications", Selectable_state::Alerts_and_Notifications))
+    else if (ImGui::Selectable("Alerts and Notifications", currentSection == AppSections::Alerts_and_Notifications))
     {
-        false_all_states();
-        Selectable_state::Alerts_and_Notifications = true;
+        currentSection = AppSections::Alerts_and_Notifications;
     }
-    if (ImGui::Selectable("Settings", Selectable_state::Settings))
+    else if (ImGui::Selectable("Settings", currentSection == AppSections::Settings))
     {
-        false_all_states();
-        Selectable_state::Settings = true;
+        currentSection = AppSections::Settings;
     }
 
 
@@ -167,19 +163,19 @@ void App::mainloop() {
 
 
 
-    if (Selectable_state::DashBoard == true)
+    if (currentSection == AppSections::DashBoard)
     {
-        show_dashboard(CurrentBatteryStatus, clock);
+        show_dashboard(currentBatteryStatus, clock);
     }
-    else if (Selectable_state::Alerts_and_Notifications == true)
+    else if (currentSection == AppSections::Alerts_and_Notifications)
     {
-        show_alerts_and_notification(CurrentBatteryStatus);
+        show_alerts_and_notification(currentBatteryStatus);
     }
-    else if (Selectable_state::Battery_Health == true)
+    else if (currentSection == AppSections::Battery_Health)
     {
         show_battery_health();
     }
-    else if (Selectable_state::Settings == true)
+    else if (currentSection == AppSections::Settings)
     {
         show_settings();
     }

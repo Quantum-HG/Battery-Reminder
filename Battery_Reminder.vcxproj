@@ -151,11 +151,19 @@
     <ClCompile Include="src\core.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\sections.cpp" />
+    <ClCompile Include="src\sections\alerts_and_notifications.cpp" />
+    <ClCompile Include="src\sections\dashboard.cpp" />
+    <ClCompile Include="src\sections\settings.cpp" />
+    <ClCompile Include="src\sections\battery_health.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\alerts_and_notifications.h" />
     <ClInclude Include="include\app.h" />
+    <ClInclude Include="include\battery_health.h" />
     <ClInclude Include="include\core.h" />
+    <ClInclude Include="include\dashboard.h" />
     <ClInclude Include="include\sections.h" />
+    <ClInclude Include="include\settings.h" />
     <ClInclude Include="libraries\imgui-sfml\imgui-SFML.h" />
   </ItemGroup>
   <ItemGroup>

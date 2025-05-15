@@ -26,7 +26,8 @@ private:
     sf::Image icon;             // the sfml app icon
     ImGuiIO* io;                // imGui IO 
     ImGuiStyle* style;          // imGui style
-    core::BatteryStatus CurrentBatteryStatus;
+    core::BatteryStatus currentBatteryStatus;
+    AppSections currentSection = AppSections::DashBoard; // Default section
     bool was_charging = false;
     nlohmann::json loaded_json_data;
 
