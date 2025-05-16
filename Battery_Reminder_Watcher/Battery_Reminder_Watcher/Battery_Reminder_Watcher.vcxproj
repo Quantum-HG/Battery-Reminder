@@ -130,10 +130,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\core.h" />
+    <ClInclude Include="app.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\libraries\wintoast\src\wintoastlib.cpp" />
     <ClCompile Include="..\..\src\core.cpp" />
+    <ClCompile Include="app.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,7 +1,7 @@
 #include "core.h"
 
-// Load data from the file 
-nlohmann::json core::load_data()
+// return the data from file
+nlohmann::json core::load_json_data()
 {
     std::ifstream file("data.json");
 
@@ -26,6 +26,12 @@ nlohmann::json core::load_data()
     // Close the file stream
     file.close();
 
+    return data;
+}
+
+// Load data from the file 
+nlohmann::json core::set_Config(nlohmann::json data)
+{
     core::Config::ALERT_PERCENTAGE = data["ALERT_PERCENTAGE"].get<int>();
     core::Config::REMIND_AFTER_EVERY = data["REMIND_AFTER_EVERY"].get<int>();
     core::Config::MESSAGE_BOX_ALERT_PREFERENCE = data["MESSAGE_BOX_ALERT_PREFERENCE"].get<bool>();
@@ -161,11 +167,30 @@ std::string core::getDateTime()
 
     // Format: DD-MM-YYYY HH:MM:SS
     char buffer[100];
-    std::strftime(buffer, sizeof(buffer), "%d-%m-%Y %H:%M:%S", &localTime);
+    std::strftime(buffer, sizeof(buffer), "%d-%m-%Y %H:%M", &localTime);
 
     return std::string(buffer);
 }
 
+
+std::string core::getWindowsUsername() {
+    char username[UNLEN + 1];
+    DWORD username_len = UNLEN + 1;
+
+    if (GetUserNameA(username, &username_len)) {
+        return std::string(username);
+    }
+    else {
+        return "Unknown User";
+    }
+}
+
+void core::SetWorkingDirectoryToExePath() {
+    char path[MAX_PATH];
+    GetModuleFileNameA(NULL, path, MAX_PATH);
+    *strrchr(path, '\\') = '\0'; // strip filename
+    SetCurrentDirectoryA(path);
+}
 
 
 // Func Definitions of CustomHandler class

@@ -56,23 +56,57 @@ void show_dashboard(core::BatteryStatus& CurrentBatteryStatus, sf::Clock& clock,
     {
         if (ImGui::BeginTabItem("DashBoard"))
         {
+            // Get the latest "LAST_CHARGED" value from the JSON data
+            core::Config::LAST_CHARGED = core::load_json_data()["LAST_CHARGED"].get<std::string>();
             ImGui::NewLine();
             ImGui::NewLine();
             ImGui::SetCursorPosX(50);
             BatteryPercentageWidget(CurrentBatteryStatus, clock);
             ImGui::SameLine();
 
-            ImGui::SetCursorPosX(250);
-            ImGui::SetCursorPosX(250);
-            ImGui::BeginChild(ImGui::GetID("BatteryInfo"), ImVec2(300, 300));
+            ImGui::SetCursorPosX(200);
+            ImGui::BeginChild(ImGui::GetID("BatteryInfo"), ImVec2(340, 300));
 
-            ImGui::Text("Battery Percentage : %i%%", (int)CurrentBatteryStatus.battery_percentage);
+            ImGui::NewLine();
 
-            ImGui::Text("Charging Status : ");
-            ImGui::SameLine();
-            ImVec4 color = (CurrentBatteryStatus.is_charging ? ImVec4(0, 255, 0, 255) : ImVec4(255, 255, 255, 255));
-            ImGui::TextColored(color, (CurrentBatteryStatus.is_charging ? "Charging" : "Not Charging"));
-            ImGui::Text("Last Charged : %s%", core::Config::LAST_CHARGED.c_str());
+
+            if (ImGui::BeginTable("BatteryInfoTable", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
+                ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, 160.0f);
+                ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed, 160.0f);
+                ImGui::TableHeadersRow();
+
+                // Row 1: User
+                ImGui::TableNextRow();
+                ImGui::TableSetColumnIndex(0);
+                ImGui::Text("User");
+                ImGui::TableSetColumnIndex(1);
+                ImGui::Text("%s", core::getWindowsUsername().c_str());
+
+                // Row 2: Battery Percentage
+                ImGui::TableNextRow();
+                ImGui::TableSetColumnIndex(0);
+                ImGui::Text("Battery Percentage");
+                ImGui::TableSetColumnIndex(1);
+                ImVec4 percent_color = (static_cast<int>(CurrentBatteryStatus.battery_percentage) <= 20 ? ImVec4(1.0f, 0.0f, 0.0f, 1.0f) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+                ImGui::TextColored(percent_color,"%d%%", static_cast<int>(CurrentBatteryStatus.battery_percentage));
+
+                // Row 3: Charging Status
+                ImGui::TableNextRow();
+                ImGui::TableSetColumnIndex(0);
+                ImGui::Text("Charging Status");
+                ImGui::TableSetColumnIndex(1);
+                ImVec4 color = (CurrentBatteryStatus.is_charging ? ImVec4(0.0f, 1.0f, 0.0f, 1.0f) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+                ImGui::TextColored(color, "%s", (CurrentBatteryStatus.is_charging ? "Charging" : "Not Charging"));
+
+                // Row 4: Last Charged
+                ImGui::TableNextRow();
+                ImGui::TableSetColumnIndex(0);
+                ImGui::Text("Last Charged");
+                ImGui::TableSetColumnIndex(1);
+                ImGui::Text("%s", core::Config::LAST_CHARGED.c_str());
+
+                ImGui::EndTable();
+            }
 
             ImGui::EndChild();
 

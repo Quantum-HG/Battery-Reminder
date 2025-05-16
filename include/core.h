@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <windows.h>
+#include <Lmcons.h>
 #include "wintoastlib.h"
 #include "nlohmann/json.hpp"
 #include <fstream>
@@ -40,8 +41,10 @@ namespace core {
 
     void ShowNotification(const std::wstring& title, const std::wstring& message);
 
-    // Load data from the file 
-    nlohmann::json load_data();
+    nlohmann::json load_json_data();
+    
+    // Updates the Config data from the file
+    nlohmann::json set_Config(nlohmann::json data);
 
     // Save data to file
     void save_data(nlohmann::json loaded_json_data);
@@ -51,6 +54,10 @@ namespace core {
 
     // Current current date as std::string
     std::string getDateTime();
+
+    std::string getWindowsUsername();
+
+    void SetWorkingDirectoryToExePath();
 }
 
 class CustomHandler : public IWinToastHandler {

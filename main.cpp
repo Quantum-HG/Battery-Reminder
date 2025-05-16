@@ -8,8 +8,10 @@
 
 #include "app.h"
 
+// Battery Reminder Main
 int main()
 {
+    core::SetWorkingDirectoryToExePath();
     App app;
     app.run();
     
