@@ -1,8 +1,9 @@
-# 🪫 Battery Reminder
+# Battery_Reminder
 
 **Battery Reminder** is a lightweight C++ desktop app for Windows that alerts you when your laptop battery is fully charged. It uses SFML for graphics, ImGui for the UI, and WinToastLib for native Windows notifications.
 
-![Screenshot](assets/demo.png)
+### App Preview
+![App UI](assets/demo_ui.gif)
 
 ---
 
