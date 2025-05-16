@@ -1,76 +1,64 @@
-# Battery_Reminder
+# Battery Reminder
 
-**Battery Reminder** is a lightweight C++ desktop app for Windows that alerts you when your laptop battery is fully charged. It uses SFML for graphics, ImGui for the UI, and WinToastLib for native Windows notifications.
+**Battery Reminder** is a lightweight Windows desktop application developed in C++. It notifies users when their laptop battery is fully charged. The application features a custom user interface built with ImGui, utilizes SFML for rendering, and delivers native Windows toast notifications via WinToastLib.
 
-### App Preview
-![App UI](media/preview.gif)
+## Application Preview
 
----
-
-## ⚙️ Features
-
-* 🔔 Native Windows toast notifications
-* 🖼️ Custom UI with ImGui
-* 📆 Persistent data saved with JSON
-* 🔎 Open-source and lightweight
+![Application UI](media/preview.gif)
 
 ---
 
-## 🌮 Technologies Used
+## Features
 
-* C++17
-* [SFML](https://www.sfml-dev.org/)
-* [ImGui](https://github.com/ocornut/imgui) + [ImGui-SFML](https://github.com/eliasdaler/imgui-sfml)
-* [WinToastLib](https://github.com/mohabouje/WinToast)
-* [nlohmann/json](https://github.com/nlohmann/json)
+- Native Windows toast notifications
+- Custom user interface using ImGui
+- Persistent settings and data stored in JSON format
+- Lightweight, fast, and open-source
 
 ---
 
-## 🚀 Getting Started
+## Technologies Used
+
+- C++17
+- [SFML](https://www.sfml-dev.org/) – Multimedia and graphics library
+- [ImGui](https://github.com/ocornut/imgui) – Immediate mode GUI
+- [ImGui-SFML](https://github.com/eliasdaler/imgui-sfml) – SFML bindings for ImGui
+- [WinToastLib](https://github.com/mohabouje/WinToast) – Native Windows toast notification library
+- [nlohmann/json](https://github.com/nlohmann/json) – JSON for Modern C++
+
+---
+
+## Getting Started
 
 ### Requirements
 
-* Windows 10/11
-* C++17 compatible compiler (MSVC recommended)
-* SFML 2.5+
-* ImGui + ImGui-SFML
-* WinToastLib
-* nlohmann/json
+- Windows 10 or 11
+- C++17-compatible compiler (MSVC recommended)
+- SFML 2.5 or later
+- ImGui and ImGui-SFML
+- WinToastLib
+- nlohmann/json
 
-### Build Instructions (Manual)
+### Build Instructions
 
-1. Clone the repo:
+1. Clone the repository:
 
-```bash
-git clone https://github.com/Quantum-HG/Battery-Reminder.git
-cd Battery-Reminder
-```
+    ```bash
+    git clone https://github.com/Quantum-HG/Battery-Reminder.git
+    cd Battery-Reminder
+    ```
 
-2. Add the source files to your IDE (Visual Studio, Code::Blocks, etc).
+2. Open the project in your preferred IDE (e.g., Visual Studio or Code::Blocks) and add the source files.
 
-3. Link libraries:
+3. Link the following libraries:
 
-* `sfml-graphics`
-* `sfml-window`
-* `sfml-system`
-* `user32.lib`, `shell32.lib` (required for WinToast)
+    - sfml-graphics
+    - sfml-window
+    - sfml-system
+    - user32.lib
+    - shell32.lib
 
-4. Place `Orbitron-Black.ttf` and other assets in the `assets/` folder.
-
----
-
-## 📋 Folder Structure
-
-```
-Battery-Reminder/
-├── assets/          # Icons, fonts, etc.
-├── src/             # C++ source files
-├── include/         # Header files
-├── data/            # Saved JSON config/data
-├── README.md
-├── main.cpp
-└── ...
-```
+4. Ensure that `Orbitron-Black.ttf` and all required resources are placed in the `assets/` directory.
 
 ---
 
