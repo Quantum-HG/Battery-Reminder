@@ -1,6 +1,7 @@
 # Battery Reminder
 
-**Battery Reminder** is a lightweight Windows desktop application developed in C++. It notifies users when their laptop battery is fully charged. The application features a custom user interface built with ImGui, utilizes SFML for rendering, and delivers native Windows toast notifications via WinToastLib.
+**Battery Reminder** is a lightweight Windows desktop application built in C++. It alerts users when their laptop battery reaches a user-defined battery level—helping prevent overcharging and prolong battery health. It features a custom ImGui-based interface, SFML rendering, and native Windows notifications via WinToastLib.
+
 
 ## Application Preview
 
@@ -39,30 +40,9 @@
 - WinToastLib
 - nlohmann/json
 
-### Build Instructions
-
-1. Clone the repository:
-
-    ```bash
-    git clone https://github.com/Quantum-HG/Battery-Reminder.git
-    cd Battery-Reminder
-    ```
-
-2. Open the project in your preferred IDE (e.g., Visual Studio or Code::Blocks) and add the source files.
-
-3. Link the following libraries:
-
-    - sfml-graphics
-    - sfml-window
-    - sfml-system
-    - user32.lib
-    - shell32.lib
-
-4. Ensure that `Orbitron-Black.ttf` and all required resources are placed in the `assets/` directory.
-
 ---
 
-## 🎉 Contributing
+## Contributing
 
 Pull requests are welcome! If you have ideas for new features or improvements, feel free to open an issue or fork the project.
 
