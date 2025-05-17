@@ -9,7 +9,7 @@
 #include "app.h"
 
 // Battery Reminder Main
-int main()
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
     core::SetWorkingDirectoryToExePath();
     App app;
