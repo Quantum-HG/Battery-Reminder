@@ -1,20 +1,17 @@
 #include "core.h"
 
-// return the data from file
+
 nlohmann::json core::load_json_data()
 {
-    std::ifstream file("data.json");
+    std::ifstream file("data\\data.json");
 
-    // Check if the file stream is open
     if (!file.is_open()) {
         std::cerr << "Failed to open file for reading" << std::endl;
         exit(1);
     }
 
-    // Create a JSON object
     nlohmann::json data;
 
-    // Read JSON data from the file stream into the JSON object
     try {
         file >> data;
     }
@@ -23,26 +20,22 @@ nlohmann::json core::load_json_data()
         exit(1);
     }
 
-    // Close the file stream
     file.close();
 
     return data;
 }
 
-// Load data from the file 
-nlohmann::json core::set_Config(nlohmann::json data)
+void core::set_Config(nlohmann::json data)
 {
     core::Config::ALERT_PERCENTAGE = data["ALERT_PERCENTAGE"].get<int>();
     core::Config::REMIND_AFTER_EVERY = data["REMIND_AFTER_EVERY"].get<int>();
     core::Config::MESSAGE_BOX_ALERT_PREFERENCE = data["MESSAGE_BOX_ALERT_PREFERENCE"].get<bool>();
     core::Config::TOAST_NOTIFICATION_ALERT_PREFERENCE = data["TOAST_NOTIFICATION_ALERT_PREFERENCE"].get<bool>();
     core::Config::LAST_CHARGED = data["LAST_CHARGED"].get<std::string>();
-    return data;
 }
 
-// Save data to file
 void core::save_data(nlohmann::json loaded_json_data)
-{// Create a JSON object
+{
     nlohmann::json j = {
         {"ALERT_PERCENTAGE", core::Config::ALERT_PERCENTAGE},
         {"REMIND_AFTER_EVERY", core::Config::REMIND_AFTER_EVERY},
@@ -51,23 +44,17 @@ void core::save_data(nlohmann::json loaded_json_data)
         {"LAST_CHARGED", core::Config::LAST_CHARGED}
     };
 
-    // "CHARGE_CYCLES", { {core::getDate(),  0}, }
+    std::ofstream file("data\\data.json");
     
-
-    std::ofstream file("data.json");
-
-    // Write the JSON object to the file stream
     file << j;
 
-    // Close the file stream
     file.close();
 }
 
-// Toast notifications to notify battery percentage
 void core::toast_notification(int battery_percentage, std::wstring caption = L"Unplug your charger")
 {
-    std::wstring appName = L"Battery Reminder";
-    std::wstring appUserModelID = L"Battery Reminder";
+    std::wstring appName = L"Battery_Reminder";
+    std::wstring appUserModelID = L"Battery_Reminder";
 
     std::vector<std::wstring> words = { L"Your Device Battery is ", std::to_wstring(battery_percentage), L"% charged" };
 
@@ -79,7 +66,7 @@ void core::toast_notification(int battery_percentage, std::wstring caption = L"U
     // Output the joined string
     std::wcout << text << std::endl;
 
-    std::wstring imagePath = L"app.ico";
+    std::wstring imagePath = L"assets\\app.ico";
     std::wstring attribute = caption;
     std::vector<std::wstring> actions;
     INT64 expiration = 0;
@@ -116,8 +103,6 @@ void core::toast_notification(int battery_percentage, std::wstring caption = L"U
     //Sleep(expiration ? (DWORD)expiration + 1000 : 15000);
 }
 
-
-// get the Battery Status
 core::BatteryStatus core::get_BatteryStatus()
 {
     core::BatteryStatus battery_status;
@@ -146,13 +131,11 @@ core::BatteryStatus core::get_BatteryStatus()
     return battery_status;
 }
 
-// Shows a Message Box style notification
 void core::ShowNotification(const std::wstring& title, const std::wstring& message) {
     // Display a system notification
     MessageBoxW(NULL, message.c_str(), title.c_str(), MB_ICONINFORMATION | MB_SYSTEMMODAL);
 }
 
-// Current current date as std::string
 std::string core::getDateTime()
 {
     // Get the current time point
@@ -171,7 +154,6 @@ std::string core::getDateTime()
 
     return std::string(buffer);
 }
-
 
 std::string core::getWindowsUsername() {
     char username[UNLEN + 1];

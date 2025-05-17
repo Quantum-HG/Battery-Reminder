@@ -24,7 +24,7 @@ void show_battery_health()
                 //executeCommandWithAdmin(L"powercfg /REPORT");
                 //execute_cmd(L"powercfg /BATTERYREPORT");
                 //system("powercfg /BATTERYREPORT");
-                system("powercfg /batteryreport /output battery_report.html");
+                system("powercfg /batteryreport /output data\\battery_report.html");
                 core::ShowNotification(L"Success", L"Battery Report Generated Successfully!");
                 //system("start battery_report.html");
 
@@ -42,7 +42,7 @@ void show_battery_health()
 
             if (ImGui::Button("View Battery Report"))
             {
-                ShellExecuteA(NULL, "open", "battery_report.html", NULL, NULL, SW_SHOWNORMAL);
+                ShellExecuteA(NULL, "open", "data\\battery_report.html", NULL, NULL, SW_SHOWNORMAL);
             }
 
             ImGui::Separator();

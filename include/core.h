@@ -10,10 +10,8 @@
 #include <string>
 
 using namespace WinToastLib;
-// using json = nlohmann::json;
 
-
-// Namespace Containing all the Custom Functions
+// Namespace Containing all the Custom Core Functions
 namespace core {
 
     // BatteryStatus struct which have variables to store user's battery status
@@ -24,27 +22,27 @@ namespace core {
         bool  is_charging       {false};
     };
 
-
-    // Configurations which can be set 
+    // Configurations which can be set by the user
     namespace Config
     {
         extern int  ALERT_PERCENTAGE;
         extern int  REMIND_AFTER_EVERY;
-
         extern bool MESSAGE_BOX_ALERT_PREFERENCE;
         extern bool TOAST_NOTIFICATION_ALERT_PREFERENCE;
-
-        extern std::string LAST_CHARGED;
+        extern std::string LAST_CHARGED; // stores the datetime when the charger was last plugged out
     }
 
+    // Helps to get the current battery status
     BatteryStatus get_BatteryStatus();
 
+    // shows a message box with the given title and message
     void ShowNotification(const std::wstring& title, const std::wstring& message);
 
+    // loads and returns the json data from the file
     nlohmann::json load_json_data();
     
-    // Updates the Config data from the file
-    nlohmann::json set_Config(nlohmann::json data);
+    // Set the Current Configs equal to the loaded json data
+    void set_Config(nlohmann::json data);
 
     // Save data to file
     void save_data(nlohmann::json loaded_json_data);
@@ -55,8 +53,10 @@ namespace core {
     // Current current date as std::string
     std::string getDateTime();
 
+    // Get the Windows username
     std::string getWindowsUsername();
 
+    // Sets the Current working directory to the path of the executable
     void SetWorkingDirectoryToExePath();
 }
 
