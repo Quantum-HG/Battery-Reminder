@@ -42,6 +42,12 @@
 
 ---
 
+## Building Instructions
+
+- 📄 [Step-by-step guide for Visual Studio](docs/visual_studio_guide.md)
+
+---
+
 ## Contributing
 
 Pull requests are welcome! If you have ideas for new features or improvements, feel free to open an issue or fork the project.
