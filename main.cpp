@@ -10,6 +10,7 @@
 
 // Battery Reminder Main
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+//int main()
 {
     core::SetWorkingDirectoryToExePath();
     App app;

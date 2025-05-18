@@ -24,7 +24,9 @@ void show_battery_health()
                 //executeCommandWithAdmin(L"powercfg /REPORT");
                 //execute_cmd(L"powercfg /BATTERYREPORT");
                 //system("powercfg /BATTERYREPORT");
-                system("powercfg /batteryreport /output data\\battery_report.html");
+                std::string cmd = "powercfg /batteryreport /output " ;
+                std::string file_path = core::getAppDataPath() + "\\Battery Reminder\\" + "data\\battery_report.html";
+                system((cmd + file_path).c_str());
                 core::ShowNotification(L"Success", L"Battery Report Generated Successfully!");
                 //system("start battery_report.html");
 
@@ -42,7 +44,8 @@ void show_battery_health()
 
             if (ImGui::Button("View Battery Report"))
             {
-                ShellExecuteA(NULL, "open", "data\\battery_report.html", NULL, NULL, SW_SHOWNORMAL);
+                std::string file_path = core::getAppDataPath() + "\\Battery Reminder\\" + "data\\battery_report.html";
+                ShellExecuteA(NULL, "open", file_path.c_str(), NULL, NULL, SW_SHOWNORMAL);
             }
 
             ImGui::Separator();

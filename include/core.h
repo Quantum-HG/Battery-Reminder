@@ -58,6 +58,8 @@ namespace core {
 
     // Sets the Current working directory to the path of the executable
     void SetWorkingDirectoryToExePath();
+
+    std::string getAppDataPath();
 }
 
 class CustomHandler : public IWinToastHandler {

@@ -42,14 +42,16 @@ void App::initWindow() {
     window.create(sf::VideoMode(900, 544), "Battery_Reminder", sf::Style::Close);
     window.setFramerateLimit(60);
     system("dir");
+
     // set window icon
-    sf::Image icon;
-    if (!icon.loadFromFile("C:\\Users\\HG\\Desktop\\HG\\Programming\\cpp\\CPP APPS\\Battery_Reminder\\x64\\Debug\\assets\\flash.png")) {
+
+    /*sf::Image icon;
+    if (!icon.loadFromFile("assets\\icon.png")) {
         std::cerr << "Failed to load icon.\n";
     }
     else {
-        //window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-    }
+        window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+    }*/
 }
 
 void App::initImGui() {
@@ -64,7 +66,7 @@ void App::initImGuiIO() {
     io->Fonts->Clear();
     io->Fonts->AddFontFromFileTTF("assets\\Orbitron-Black.ttf", 16.0f);
     ImGui::SFML::UpdateFontTexture();
-    io->IniFilename = "data\\imgui.ini";
+    io->IniFilename = std::string(core::getAppDataPath() + "\\Battery Reminder\\" + "data\\imgui.ini").c_str();
 }
 
 void App::initImGuiStyles() {

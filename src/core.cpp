@@ -3,7 +3,7 @@
 
 nlohmann::json core::load_json_data()
 {
-    std::ifstream file("data\\data.json");
+    std::ifstream file(core::getAppDataPath() + "\\Battery Reminder\\" + "data\\data.json");
 
     if (!file.is_open()) {
         std::cerr << "Failed to open file for reading" << std::endl;
@@ -44,7 +44,7 @@ void core::save_data(nlohmann::json loaded_json_data)
         {"LAST_CHARGED", core::Config::LAST_CHARGED}
     };
 
-    std::ofstream file("data\\data.json");
+    std::ofstream file(core::getAppDataPath() + "\\Battery Reminder\\" + "data\\data.json");
     
     file << j;
 
@@ -172,6 +172,17 @@ void core::SetWorkingDirectoryToExePath() {
     GetModuleFileNameA(NULL, path, MAX_PATH);
     *strrchr(path, '\\') = '\0'; // strip filename
     SetCurrentDirectoryA(path);
+}
+
+std::string core::getAppDataPath()
+{
+    wchar_t appDataPath[MAX_PATH];
+    SHGetFolderPathW(NULL, CSIDL_LOCAL_APPDATA, NULL, 0, appDataPath);
+
+    std::wstring path = std::wstring(appDataPath);
+
+    return std::string(path.begin(), path.end());
+
 }
 
 
