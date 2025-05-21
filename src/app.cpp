@@ -1,5 +1,5 @@
 #include "app.h"
-
+#define FONT_PATH "assets\\Roboto-Medium.ttf"
 
 App::App() {
     // Empty constructor
@@ -64,7 +64,7 @@ void App::initImGuiIO() {
 
     io = &ImGui::GetIO();
     io->Fonts->Clear();
-    io->Fonts->AddFontFromFileTTF("assets\\Orbitron-Black.ttf", 16.0f);
+    io->Fonts->AddFontFromFileTTF(FONT_PATH, 16.0f);
     ImGui::SFML::UpdateFontTexture();
     io->IniFilename = std::string(core::getAppDataPath() + "\\Battery Reminder\\" + "data\\imgui.ini").c_str();
 }
@@ -176,7 +176,7 @@ void App::handleInputs() {
 
         if (event.type == sf::Event::Closed)
         {
-            core::save_data(loaded_json_data);
+            core::save_data();
             window.close();
         }
     }
@@ -209,14 +209,19 @@ void App::mainloop() {
     // std::cout << "w- " << window.getSize().x << ", h- " << window.getSize().y << std::endl;
 
     // ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.0f, 0.0f, 0.0f, 1.0f)); // Change frame background color
-    ImGui::Begin("Hello, ImGui!", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar);
-    // ImGui::Begin("Hello, ImGui!",nullptr, ImGuiWindowFlags_NoMove);
-
+    ImGui::SetNextWindowPos(ImVec2(0, 0));
+    ImGui::SetNextWindowSize(ImVec2( (int) this->window.getSize().x, (int) this->window.getSize().y));
+    ImGui::Begin("Battery Reminder!", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar);
 
 
     if (currentBatteryStatus.is_charging)
     {
-        ImGui::GetForegroundDrawList()->AddRect(ImVec2(0, 0), ImVec2(ImGui::GetWindowSize().x - 10, ImGui::GetWindowSize().y - 20), IM_COL32(0, 230, 0, abs(250.0f * sinf(clock.getElapsedTime().asSeconds()))), 0.0f, 0, 4);
+        ImGui::GetForegroundDrawList()->AddRect(ImVec2(2, 2), ImVec2(897, 541), 
+            IM_COL32(
+                (currentBatteryStatus.battery_percentage<=20 ? 200 : 0),
+                (currentBatteryStatus.battery_percentage > 20 ? 200 : 0),
+                0,
+                abs(250.0f * sinf(clock.getElapsedTime().asSeconds()))), 0.0f, 0, 4);
     }
     //sf::Texture texture;
     // texture.loadFromFile("flash.png");
@@ -243,7 +248,7 @@ void App::mainloop() {
     }
 
 
-    //ImGui::ShowDemoWindow();
+    ImGui::ShowDemoWindow();
     ImGui::EndChildFrame();
 
     // Widgets inside the container
@@ -271,7 +276,7 @@ void App::mainloop() {
 
     if (ImGui::Button("Save Changes"))
     {
-        core::save_data(loaded_json_data);
+        core::save_data();
         core::ShowNotification(L"Success", L"Your changes have been saved");
     }
 

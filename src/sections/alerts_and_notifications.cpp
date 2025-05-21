@@ -40,7 +40,7 @@ void show_alerts_and_notification(core::BatteryStatus& battery_status)
             ImGui::SameLine();
 
             ImGui::SetCursorPosX(300);
-            if (ImGui::Button("Show Example MessageBox Alert"))
+            if (ImGui::Button("      Show Example MessageBox Alert      "))
             {
                 core::ShowNotification(L"Example Alert", L"You'll receive alerts like these");
             }
@@ -57,9 +57,19 @@ void show_alerts_and_notification(core::BatteryStatus& battery_status)
                 core::toast_notification((int)battery_status.battery_percentage, L"You'll receive notifications like these");
             }
 
+            ImGui::NewLine();
+            ImGui::Separator();
+            ImGui::BulletText("Charging Alerts");
+            ImGui::Separator();
+            ImGui::NewLine();
 
+            ImGui::Checkbox("Alert on Charger Plugged                    ", &core::Config::PLUGGED_IN_ALERT);
+            
+            ImGui::SameLine();
 
+            ImGui::Checkbox("Alert on Charger Unplugged", &core::Config::UNPLUGGED_ALERT);
 
+            ImGui::NewLine();
 
             ImGui::EndTabItem();
         }

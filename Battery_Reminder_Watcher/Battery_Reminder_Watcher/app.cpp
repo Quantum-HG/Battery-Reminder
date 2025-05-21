@@ -21,16 +21,18 @@ void BatteryReminderWatcher::mainloop()
 	// check if the charger has just plugged out/in
 	if (is_charging != currentBatteryStatus.is_charging)
 	{
-		if (!is_charging) // charger is plugged in
+		if (!is_charging and loaded_json_data["PLUGGED_IN_ALERT"].get<bool>()) // charger is plugged in
 		{
 			core::toast_notification((int)currentBatteryStatus.battery_percentage, L"Charger Plugged In");
 		}
 		else // charger is unplugged
 		{
-			core::Config::LAST_CHARGED = core::getDateTime();
-			core::save_data(loaded_json_data);
-			core::toast_notification((int)currentBatteryStatus.battery_percentage, L"Charger Unplugged");
-		}
+			if (loaded_json_data["UNPLUGGED_ALERT"].get<bool>())
+			{   core::Config::LAST_CHARGED = core::getDateTime();
+				core::save_data();
+				core::toast_notification((int)currentBatteryStatus.battery_percentage, L"Charger Unplugged");
+			}
+	}
 	}
 
 	is_charging = currentBatteryStatus.is_charging;

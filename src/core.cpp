@@ -3,7 +3,9 @@
 
 nlohmann::json core::load_json_data()
 {
-    std::ifstream file(core::getAppDataPath() + "\\Battery Reminder\\" + "data\\data.json");
+    std::string file_path = core::getAppDataPath() + "\\Battery Reminder\\" + "data\\data.json";
+    std::ifstream file(file_path);
+    std::cout << file_path << std::endl;
 
     if (!file.is_open()) {
         std::cerr << "Failed to open file for reading" << std::endl;
@@ -25,23 +27,29 @@ nlohmann::json core::load_json_data()
     return data;
 }
 
+#ifndef BATTERY_REMINDER_WATCHER
 void core::set_Config(nlohmann::json data)
 {
     core::Config::ALERT_PERCENTAGE = data["ALERT_PERCENTAGE"].get<int>();
     core::Config::REMIND_AFTER_EVERY = data["REMIND_AFTER_EVERY"].get<int>();
     core::Config::MESSAGE_BOX_ALERT_PREFERENCE = data["MESSAGE_BOX_ALERT_PREFERENCE"].get<bool>();
     core::Config::TOAST_NOTIFICATION_ALERT_PREFERENCE = data["TOAST_NOTIFICATION_ALERT_PREFERENCE"].get<bool>();
+    core::Config::PLUGGED_IN_ALERT = data["PLUGGED_IN_ALERT"];
+    core::Config::UNPLUGGED_ALERT = data["UNPLUGGED_ALERT"];
     core::Config::LAST_CHARGED = data["LAST_CHARGED"].get<std::string>();
 }
+#endif
 
-void core::save_data(nlohmann::json loaded_json_data)
+void core::save_data()
 {
     nlohmann::json j = {
         {"ALERT_PERCENTAGE", core::Config::ALERT_PERCENTAGE},
         {"REMIND_AFTER_EVERY", core::Config::REMIND_AFTER_EVERY},
         {"MESSAGE_BOX_ALERT_PREFERENCE", core::Config::MESSAGE_BOX_ALERT_PREFERENCE},
         {"TOAST_NOTIFICATION_ALERT_PREFERENCE", core::Config::TOAST_NOTIFICATION_ALERT_PREFERENCE},
-        {"LAST_CHARGED", core::Config::LAST_CHARGED}
+        {"LAST_CHARGED", core::Config::LAST_CHARGED},
+        {"PLUGGED_IN_ALERT", core::Config::PLUGGED_IN_ALERT},
+        {"UNPLUGGED_ALERT", core::Config::UNPLUGGED_ALERT}
     };
 
     std::ofstream file(core::getAppDataPath() + "\\Battery Reminder\\" + "data\\data.json");
@@ -195,6 +203,8 @@ void CustomHandler::toastFailed() const {}
 // Declaration of Configuration Variables
 int core::Config::ALERT_PERCENTAGE = 95;
 int core::Config::REMIND_AFTER_EVERY = 10;
-bool core::Config::MESSAGE_BOX_ALERT_PREFERENCE = false;
-bool core::Config::TOAST_NOTIFICATION_ALERT_PREFERENCE = false;
+bool core::Config::MESSAGE_BOX_ALERT_PREFERENCE = true;
+bool core::Config::TOAST_NOTIFICATION_ALERT_PREFERENCE = true;
+bool core::Config::PLUGGED_IN_ALERT = true;
+bool core::Config::UNPLUGGED_ALERT = true;
 std::string core::Config::LAST_CHARGED = "";

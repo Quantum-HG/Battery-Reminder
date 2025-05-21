@@ -29,6 +29,8 @@ namespace core {
         extern int  REMIND_AFTER_EVERY;
         extern bool MESSAGE_BOX_ALERT_PREFERENCE;
         extern bool TOAST_NOTIFICATION_ALERT_PREFERENCE;
+        extern bool PLUGGED_IN_ALERT;
+        extern bool UNPLUGGED_ALERT;
         extern std::string LAST_CHARGED; // stores the datetime when the charger was last plugged out
     }
 
@@ -45,7 +47,7 @@ namespace core {
     void set_Config(nlohmann::json data);
 
     // Save data to file
-    void save_data(nlohmann::json loaded_json_data);
+    void save_data();
 
     // Creates a toast Battery notification
     void toast_notification(int battery_percentage, std::wstring caption);

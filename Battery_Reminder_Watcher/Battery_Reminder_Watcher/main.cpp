@@ -5,7 +5,7 @@
  * Copyright (c) 2025 Quantum-HG
  * See the LICENSE file in the project root for license information.
  */
-
+#define BATTERY_REMINDER_WATCHER
 #include "app.h"
 
 // Battery Reminder Watcher Main
