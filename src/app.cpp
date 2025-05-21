@@ -248,7 +248,7 @@ void App::mainloop() {
     }
 
 
-    ImGui::ShowDemoWindow();
+    //ImGui::ShowDemoWindow();
     ImGui::EndChildFrame();
 
     // Widgets inside the container
