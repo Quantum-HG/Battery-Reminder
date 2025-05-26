@@ -9,6 +9,7 @@
 #include "nlohmann/json.hpp"
 #include <fstream>
 
+
 // The BatteryPercentageWidget to show battery percentage
 void BatteryPercentageWidget(core::BatteryStatus& CurrentBatteryStatus, sf::Clock& clock);
 

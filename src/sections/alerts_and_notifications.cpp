@@ -1,6 +1,5 @@
 #include "alerts_and_notifications.h"
 
-
 // Alerts and notification section of the app
 void show_alerts_and_notification(core::BatteryStatus& battery_status)
 {
@@ -33,7 +32,6 @@ void show_alerts_and_notification(core::BatteryStatus& battery_status)
             ImGui::BulletText("Notification Type");
             ImGui::Separator();
             ImGui::NewLine();
-            //ImGui::BeginChildFrame(ImGui::GetID("Notification Type"), ImVec2(700, 100));
 
             ImGui::Checkbox("Message Box Notification", &core::Config::MESSAGE_BOX_ALERT_PREFERENCE);
 

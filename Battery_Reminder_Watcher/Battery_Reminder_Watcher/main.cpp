@@ -9,7 +9,8 @@
 #include "app.h"
 
 // Battery Reminder Watcher Main
-int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+//int wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+int main(int argc, char* argv[])
 {
 	core::SetWorkingDirectoryToExePath();
 	BatteryReminderWatcher app;

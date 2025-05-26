@@ -27,6 +27,7 @@ namespace core {
     {
         extern int  ALERT_PERCENTAGE;
         extern int  REMIND_AFTER_EVERY;
+        extern int  THEME;
         extern bool MESSAGE_BOX_ALERT_PREFERENCE;
         extern bool TOAST_NOTIFICATION_ALERT_PREFERENCE;
         extern bool PLUGGED_IN_ALERT;
@@ -61,6 +62,7 @@ namespace core {
     // Sets the Current working directory to the path of the executable
     void SetWorkingDirectoryToExePath();
 
+    // Get the path to the AppData folder
     std::string getAppDataPath();
 }
 

@@ -5,7 +5,6 @@ nlohmann::json core::load_json_data()
 {
     std::string file_path = core::getAppDataPath() + "\\Battery Reminder\\" + "data\\data.json";
     std::ifstream file(file_path);
-    std::cout << file_path << std::endl;
 
     if (!file.is_open()) {
         std::cerr << "Failed to open file for reading" << std::endl;
@@ -32,6 +31,7 @@ void core::set_Config(nlohmann::json data)
 {
     core::Config::ALERT_PERCENTAGE = data["ALERT_PERCENTAGE"].get<int>();
     core::Config::REMIND_AFTER_EVERY = data["REMIND_AFTER_EVERY"].get<int>();
+    core::Config::THEME = data["THEME"].get<int>();
     core::Config::MESSAGE_BOX_ALERT_PREFERENCE = data["MESSAGE_BOX_ALERT_PREFERENCE"].get<bool>();
     core::Config::TOAST_NOTIFICATION_ALERT_PREFERENCE = data["TOAST_NOTIFICATION_ALERT_PREFERENCE"].get<bool>();
     core::Config::PLUGGED_IN_ALERT = data["PLUGGED_IN_ALERT"];
@@ -49,7 +49,8 @@ void core::save_data()
         {"TOAST_NOTIFICATION_ALERT_PREFERENCE", core::Config::TOAST_NOTIFICATION_ALERT_PREFERENCE},
         {"LAST_CHARGED", core::Config::LAST_CHARGED},
         {"PLUGGED_IN_ALERT", core::Config::PLUGGED_IN_ALERT},
-        {"UNPLUGGED_ALERT", core::Config::UNPLUGGED_ALERT}
+        {"UNPLUGGED_ALERT", core::Config::UNPLUGGED_ALERT},
+        {"THEME", core::Config::THEME}
     };
 
     std::ofstream file(core::getAppDataPath() + "\\Battery Reminder\\" + "data\\data.json");
@@ -146,15 +147,12 @@ void core::ShowNotification(const std::wstring& title, const std::wstring& messa
 
 std::string core::getDateTime()
 {
-    // Get the current time point
     auto now = std::chrono::system_clock::now();
 
-    // Convert to time_t to get calendar time
     std::time_t now_c = std::chrono::system_clock::to_time_t(now);
 
-    // Convert to tm structure for local time
     std::tm localTime;
-    localtime_s(&localTime, &now_c); // For Windows; use localtime_r on POSIX
+    localtime_s(&localTime, &now_c);
 
     // Format: DD-MM-YYYY HH:MM:SS
     char buffer[100];
@@ -203,6 +201,7 @@ void CustomHandler::toastFailed() const {}
 // Declaration of Configuration Variables
 int core::Config::ALERT_PERCENTAGE = 95;
 int core::Config::REMIND_AFTER_EVERY = 10;
+int core::Config::THEME = 2;
 bool core::Config::MESSAGE_BOX_ALERT_PREFERENCE = true;
 bool core::Config::TOAST_NOTIFICATION_ALERT_PREFERENCE = true;
 bool core::Config::PLUGGED_IN_ALERT = true;

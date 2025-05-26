@@ -1,13 +1,8 @@
 #include "app.h"
 
-BatteryReminderWatcher::BatteryReminderWatcher()
-{
-}
+BatteryReminderWatcher::BatteryReminderWatcher(){}
 
-BatteryReminderWatcher::~BatteryReminderWatcher()
-{
-
-}
+BatteryReminderWatcher::~BatteryReminderWatcher(){}
 
 void BatteryReminderWatcher::init()
 {
@@ -16,6 +11,7 @@ void BatteryReminderWatcher::init()
 	start = std::chrono::high_resolution_clock::now();
 	is_charging = currentBatteryStatus.is_charging;
 }
+
 void BatteryReminderWatcher::mainloop()
 {
 	// check if the charger has just plugged out/in
@@ -77,6 +73,6 @@ void BatteryReminderWatcher::run()
 	while (true)
 	{
 		mainloop();
-		Sleep(1000);
+		Sleep(16);
 	}
 }

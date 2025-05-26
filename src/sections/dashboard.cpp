@@ -44,8 +44,6 @@ void BatteryPercentageWidget(core::BatteryStatus& CurrentBatteryStatus, sf::Cloc
     ImGui::EndGroup();
 }
 
-
-
 // DashBoard section of the app
 void show_dashboard(core::BatteryStatus& CurrentBatteryStatus, sf::Clock& clock, nlohmann::json loaded_json_data)
 {
