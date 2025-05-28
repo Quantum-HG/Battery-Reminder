@@ -21,11 +21,17 @@ void show_battery_health()
             ImGui::NewLine();
             if (ImGui::Button("Generate Battery Report"))
             {
-                std::string cmd = "powercfg /batteryreport /output " ;
-                std::string file_path = core::getAppDataPath() + "\\Battery Reminder\\" + "data\\battery_report.html";
-                std::string final_path = "\"" + file_path + "\"";
-                system((cmd + final_path).c_str());
-                //ImGui::Text((cmd + final_path).c_str());
+                std::string reportPath = core::getAppDataPath() + "\\Battery Reminder\\data\\battery_report.html";
+                std::string command = "powercfg /batteryreport /output \"" + reportPath + "\"";
+
+
+                ShellExecuteA(NULL,"open","cmd.exe",("/C " + command).c_str(), NULL,SW_HIDE);
+                //std::string cmd = "powercfg /batteryreport /output " ;
+                //std::string file_path = core::getAppDataPath() + "\\Battery Reminder\\" + "data\\battery_report.html";
+                //std::string final_path = "\"" + file_path + "\"";
+                ////system((cmd + final_path).c_str());
+                //ShellExecuteA(NULL, "open", (cmd + final_path).c_str(), NULL, NULL, SW_HIDE);
+                ////ImGui::Text((cmd + final_path).c_str());
                 core::ShowNotification(L"Success", L"Battery Report Generated Successfully!");
 
             }
@@ -45,7 +51,7 @@ void show_battery_health()
                 std::string file_path = core::getAppDataPath() + "\\Battery Reminder\\" + "data\\battery_report.html";
                 std::cout << file_path.c_str() << std::endl;
                 //system(file_path.c_str());
-                ShellExecuteA(NULL, "open", file_path.c_str(), NULL, NULL, SW_SHOWNORMAL);
+                ShellExecuteA(NULL, "open", file_path.c_str(), NULL, NULL, SW_HIDE);
             }
 
             ImGui::Separator();

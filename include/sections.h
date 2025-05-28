@@ -14,6 +14,7 @@
 #include "settings.h"
 #include "battery_health.h"
 #include "alerts_and_notifications.h"
+#include "about.h"
 
 
 enum class AppSections
@@ -21,5 +22,6 @@ enum class AppSections
     DashBoard,
     Settings,
     Battery_Health,
-    Alerts_and_Notifications
+    Alerts_and_Notifications,
+    About
 };

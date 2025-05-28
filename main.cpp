@@ -34,7 +34,6 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int 
 //int main()
 {
     core::SetWorkingDirectoryToExePath();
-    //core::save_data();
     App app;
     app.run();
     

@@ -38,7 +38,13 @@ void BatteryPercentageWidget(core::BatteryStatus& CurrentBatteryStatus, sf::Cloc
     // Draw battery fill
     ImVec2 battery_fill_top_left = ImVec2(battery_inner_top_left.x, battery_bottom_right.y - battery_fill_height + battery_thickness);
     ImVec2 battery_fill_bottom_right = battery_inner_bottom_right;
-    draw_list->AddRectFilled(battery_fill_top_left, battery_fill_bottom_right, IM_COL32(0, val, 0, 255));
+    draw_list->AddRectFilled
+    (battery_fill_top_left,
+    battery_fill_bottom_right,
+    IM_COL32((CurrentBatteryStatus.battery_percentage <= 20 ? val: 0),
+        (CurrentBatteryStatus.battery_percentage > 20 ? val : 0),
+        0,
+        255));
 
     ImGui::EndChild();
     ImGui::EndGroup();

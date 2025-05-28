@@ -60,7 +60,7 @@ void BatteryReminderWatcher::mainloop()
 					core::toast_notification((int)currentBatteryStatus.battery_percentage, L"Unplug your charger !");
 
 				if (loaded_json_data["MESSAGE_BOX_ALERT_PREFERENCE"].get<bool>())
-					core::ShowNotification(L"Unplug your charger", L"Unplug your charger !");
+					core::ShowNotification(L"Battery Reminder", L"Unplug your charger !");
 
 			}
 		}

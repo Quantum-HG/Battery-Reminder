@@ -38,22 +38,22 @@ void App::init()
 
 void App::initWindow() {
 
-    window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battery_Reminder", sf::Style::Close);
+    window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Battery Reminder", sf::Style::Close);
     window.setFramerateLimit(60);
 
     // set window icon
 
-    /*sf::Image icon;
+    sf::Image icon;
     if (!icon.loadFromFile("assets\\icon.png")) {
         std::cerr << "Failed to load icon.\n";
     }
     else {
         window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-    }*/
+    }
 }
 
 void App::initImGui() {
-    // TODO: init ImGui-SFML
+
     ImGui::SFML::Init(window);
 }
 
@@ -138,6 +138,9 @@ void App::mainloop() {
     else if (ImGui::Selectable("Settings", currentSection == AppSections::Settings))
         currentSection = AppSections::Settings;
 
+    else if (ImGui::Selectable("About", currentSection == AppSections::About))
+        currentSection = AppSections::About;
+
     #ifdef SHOW_DEMO_WINDOW
     ImGui::ShowDemoWindow();
     #endif 
@@ -163,14 +166,10 @@ void App::mainloop() {
     {
         show_settings();
     }
-
-
-    if (ImGui::Button("Save Changes"))
+    else if (currentSection == AppSections::About)
     {
-        core::save_data();
-        core::ShowNotification(L"Success", L"Your changes have been saved");
+        show_about();
     }
-
 
     ImGui::End();
     //=========================================================================================================================================================================================================================================================

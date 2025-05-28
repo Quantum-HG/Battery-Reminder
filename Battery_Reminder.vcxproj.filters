@@ -60,6 +60,9 @@
     <ClCompile Include="src\sections\battery_health.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\sections\about.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libraries\imgui-sfml\imgui-SFML.h">
@@ -84,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\about.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

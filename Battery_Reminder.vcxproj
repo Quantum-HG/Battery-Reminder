@@ -151,12 +151,14 @@
     <ClCompile Include="src\core.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\sections.cpp" />
+    <ClCompile Include="src\sections\about.cpp" />
     <ClCompile Include="src\sections\alerts_and_notifications.cpp" />
     <ClCompile Include="src\sections\dashboard.cpp" />
     <ClCompile Include="src\sections\settings.cpp" />
     <ClCompile Include="src\sections\battery_health.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\about.h" />
     <ClInclude Include="include\alerts_and_notifications.h" />
     <ClInclude Include="include\app.h" />
     <ClInclude Include="include\battery_health.h" />
