@@ -3,9 +3,6 @@
 // Alerts and notification section of the app
 void show_alerts_and_notification(core::BatteryStatus& battery_status)
 {
-    ImGui::BeginChildFrame(ImGui::GetID("TabRegion"), ImVec2(650, 500));
-    ImGui::Text("Alerts and Notifications");
-    ImGui::Separator();
     if (ImGui::BeginTabBar("Alerts and Notifications"))
     {
         if (ImGui::BeginTabItem("Alerts and Notifications"))
@@ -73,10 +70,4 @@ void show_alerts_and_notification(core::BatteryStatus& battery_status)
         }
         ImGui::EndTabBar();
     }
-
-
-
-    ImGui::EndChildFrame();
-
-
 }

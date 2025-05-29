@@ -9,6 +9,7 @@
 #include "nlohmann/json.hpp"
 #include <fstream>
 
+ImVec4 getBatteryLevelColor(core::BatteryStatus& CurrentBatteryStatus, sf::Clock& clock);
 
 // The BatteryPercentageWidget to show battery percentage
 void BatteryPercentageWidget(core::BatteryStatus& CurrentBatteryStatus, sf::Clock& clock);

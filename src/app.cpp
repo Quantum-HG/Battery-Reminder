@@ -1,8 +1,9 @@
 #include "app.h"
 #define FONT_PATH "assets\\Roboto-Medium.ttf"
 #define WINDOW_WIDTH 900
-#define WINDOW_HEIGHT 544
-//#define SHOW_DEMO_WINDOW 
+#define WINDOW_HEIGHT 520
+//#define SHOW_STYLE_EDITOR
+
 
 App::App() {
     io = nullptr;
@@ -30,6 +31,7 @@ void App::init()
     // Set Configs from the loaded json data
     core::set_Config(loaded_json_data);
 
+    start = std::chrono::high_resolution_clock::now();
     initWindow();
     initImGui();
     initImGuiIO();
@@ -70,12 +72,20 @@ void App::initImGuiIO() {
 void App::initImGuiStyles() {
 
     switch (core::Config::THEME) {
-    case 0: ImGui::StyleColorsDark(); break;
-    case 1: ImGui::StyleColorsClassic(); break;
+    case 0: customTheme(); break;
+    case 1: ImGui::StyleColorsDark(); break;
+    case 2: ImGui::StyleColorsClassic(); break;
     }
 
     style = &ImGui::GetStyle();
     style->GrabRounding = 12.f;
+    style->FrameRounding = 5.f;
+    style->FrameBorderSize = 2.f;
+    style->CellPadding = ImVec2(14.f, 6.f);
+    style->TabBarBorderSize = 2.f;
+    style->TabRounding = 9.f;
+
+    
 
 }
 
@@ -116,12 +126,14 @@ void App::mainloop() {
 
     if (currentBatteryStatus.is_charging)
     {
-        ImGui::GetForegroundDrawList()->AddRect(ImVec2(2, 2), ImVec2(897, 541), 
+        ImVec4 level_color = getBatteryLevelColor(this->currentBatteryStatus, this->clock);;
+
+        ImGui::GetForegroundDrawList()->AddRect(ImVec2(2, 2), ImVec2(static_cast<int> (this->window.getSize().x - 3), static_cast<int> (this->window.getSize().y - 3)),
             IM_COL32(
-                (currentBatteryStatus.battery_percentage<=20 ? 200 : 0),
-                (currentBatteryStatus.battery_percentage > 20 ? 200 : 0),
-                0,
-                abs(250.0f * sinf(clock.getElapsedTime().asSeconds()))), 0.0f, 0, 4);
+                level_color.x * 200,
+                level_color.y * 200,
+                level_color.z * 200,
+                255), 0.0f, 0, 4);
     }
 
     ImGui::BeginChildFrame(ImGui::GetID("ScrollingRegion"), ImVec2(250, 500));
@@ -141,14 +153,15 @@ void App::mainloop() {
     else if (ImGui::Selectable("About", currentSection == AppSections::About))
         currentSection = AppSections::About;
 
-    #ifdef SHOW_DEMO_WINDOW
-    ImGui::ShowDemoWindow();
+    #ifdef SHOW_STYLE_EDITOR
+    ImGui::ShowStyleEditor();
     #endif 
 
     ImGui::EndChildFrame();
 
     ImGui::SameLine();
 
+    ImGui::BeginChildFrame(ImGui::GetID("TabRegion"), ImVec2(625, 500));
 
     if (currentSection == AppSections::DashBoard)
     {
@@ -171,12 +184,26 @@ void App::mainloop() {
         show_about();
     }
 
+    ImGui::EndChildFrame();
+
     ImGui::End();
     //=========================================================================================================================================================================================================================================================
 
 }
 
-void App::update() {}
+void App::update()
+{
+    auto now = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - start).count();
+
+    if (elapsed >= 5)
+    {
+        start = now;
+        core::save_data();
+        //MessageBeep(MB_OK);
+        
+    }
+}
 
 void App::endframe() {
 

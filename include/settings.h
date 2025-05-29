@@ -9,5 +9,6 @@
 #include "nlohmann/json.hpp"
 #include <fstream>
 
+void customTheme();
 // Settings section of the app
 void show_settings();

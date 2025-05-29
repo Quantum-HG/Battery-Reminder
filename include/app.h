@@ -30,6 +30,7 @@ private:
     AppSections currentSection = AppSections::DashBoard; // Default section
     bool was_charging = false;
     nlohmann::json loaded_json_data;
+    std::chrono::steady_clock::time_point start;
 
     
     void init();

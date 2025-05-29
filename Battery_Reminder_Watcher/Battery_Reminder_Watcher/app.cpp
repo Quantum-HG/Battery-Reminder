@@ -73,6 +73,6 @@ void BatteryReminderWatcher::run()
 	while (true)
 	{
 		mainloop();
-		Sleep(16);
+		Sleep(1000);
 	}
 }

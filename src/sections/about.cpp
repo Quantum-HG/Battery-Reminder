@@ -28,16 +28,13 @@ void ShowHyperlink(const char* label, const char* url) {
 // About section of the app
 void show_about()
 {
-    ImGui::BeginChildFrame(ImGui::GetID("TabRegion"), ImVec2(650, 500));
-    ImGui::Text("About");
-    ImGui::Separator();
     if (ImGui::BeginTabBar("About"))
     {
         if (ImGui::BeginTabItem("About"))
         {
             ImGui::Text("Battery Reminder");
             //ImGui::Text("Version: 1.0.0");
-            ImGui::Text("Copyright (c) 2025 Quantum-HG");
+            ImGui::Text("Copyright (c) 2025 Harsh Gupta");
             ImGui::Text("Licensed under the MIT License.");
             ShowHyperlink("GitHub Repository", "https://github.com/Quantum-HG/Battery-Reminder");
             ShowHyperlink("View License", "https://github.com/Quantum-HG/Battery-Reminder/blob/master/LICENSE");
@@ -51,5 +48,4 @@ void show_about()
         ImGui::EndTabBar();
     }
 
-    ImGui::EndChildFrame();
 }
